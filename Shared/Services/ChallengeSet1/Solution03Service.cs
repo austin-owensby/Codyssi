@@ -7,13 +7,7 @@ namespace Codyssi.Services
         public string RunPart1Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(3, example);
-
-            int answer = 0;
-
-            foreach (string line in lines)
-            {
-                
-            }
+            int answer = lines.Select(l => l.Split(' ')).Select(l => l[1]).ToInts().Sum();
 
             return answer.ToString();
         }
@@ -21,12 +15,13 @@ namespace Codyssi.Services
         public string RunPart2Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(3, example);
+            List<(string, int)> readings = lines.Select(l => l.Split(' ')).Select(l => (l[0], int.Parse(l[1]))).ToList();
 
-            int answer = 0;
+            long answer = 0;
 
-            foreach (string line in lines)
+            foreach ((string number, int numberBase) in readings)
             {
-                
+                answer += Convert.ToInt32(number, numberBase);
             }
 
             return answer.ToString();
@@ -35,15 +30,29 @@ namespace Codyssi.Services
         public string RunPart3Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(3, example);
+            List<(string, int)> readings = lines.Select(l => l.Split(' ')).Select(l => (l[0], int.Parse(l[1]))).ToList();
 
-            int answer = 0;
+            long sum = 0;
 
-            foreach (string line in lines)
+            foreach ((string number, int numberBase) in readings)
             {
-
+                sum += Convert.ToInt32(number, numberBase);
             }
 
-            return answer.ToString();
+            long remainder = sum;
+            int digit = 0;
+            int fromBase = 65;
+            string answer = string.Empty;
+
+            while (remainder != 0) {
+                //int digitValue = Math.Floor(remainder / Math.Pow(fromBase, digit));
+                char digitChar = 'a';
+                answer = $"{digitChar}answer";
+
+                digit++;
+            }
+
+            return answer;
         }
     }
 }

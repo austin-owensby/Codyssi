@@ -7,12 +7,13 @@ namespace Codyssi.Services
         public string RunPart1Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(2, example);
-
+            List<bool> outputs = lines.Select(l => l == "TRUE").ToList();
             int answer = 0;
 
-            foreach (string line in lines)
-            {
-                
+            for (int i = 0; i < outputs.Count; i++) {
+                if (outputs[i]) {
+                    answer += i + 1;
+                }
             }
 
             return answer.ToString();
@@ -21,12 +22,20 @@ namespace Codyssi.Services
         public string RunPart2Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(2, example);
+            List<bool> outputs = lines.Select(l => l == "TRUE").ToList();
+            List<bool[]> gates = outputs.Chunk(2).ToList();
 
             int answer = 0;
 
-            foreach (string line in lines)
+            for (int i = 0; i < gates.Count; i++)
             {
-                
+                bool[] gate = gates[i];
+
+                bool result = i % 2 == 0 ? gate[0] && gate[1] : gate[0] || gate[1];
+
+                if (result) {
+                    answer++;
+                }
             }
 
             return answer.ToString();
@@ -35,12 +44,28 @@ namespace Codyssi.Services
         public string RunPart3Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(2, example);
+            List<bool> outputs = lines.Select(l => l == "TRUE").ToList();
 
-            int answer = 0;
+            int answer = outputs.Count(x => x);
 
-            foreach (string line in lines)
-            {
+            while (outputs.Count > 1) {
+                List<bool[]> gates = outputs.Chunk(2).ToList();
+                List<bool> nextOutputs = [];
 
+                for (int i = 0; i < gates.Count; i++)
+                {
+                    bool[] gate = gates[i];
+
+                    bool result = i % 2 == 0 ? gate[0] && gate[1] : gate[0] || gate[1];
+
+                    if (result) {
+                        answer++;
+                    }
+
+                    nextOutputs.Add(result);
+                }
+
+                outputs = nextOutputs;
             }
 
             return answer.ToString();
