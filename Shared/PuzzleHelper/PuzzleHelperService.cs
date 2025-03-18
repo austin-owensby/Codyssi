@@ -15,26 +15,16 @@ namespace Codyssi.PuzzleHelper
         {
             string output = string.Empty;
 
-            int latestPuzzleDay = GetLatestDay();
+            bool update = await WriteInputFile(day);
 
-            if (latestPuzzleDay < day)
+            if (update)
             {
-                System.Console.WriteLine("No updates applied.");
-                output += "No updates applied.\n";
+                output = $"Created input file for Day: {day}.";
             }
             else
             {
-                bool update = await WriteInputFile(day);
-
-                if (update)
-                {
-                    output = $"Created input file for Day: {day}.";
-                }
-                else
-                {
-                    System.Console.WriteLine("No updates applied.");
-                    output += "No updates applied.\n ";
-                }
+                System.Console.WriteLine("No updates applied.");
+                output += "No updates applied.\n ";
             }
 
             return output;
@@ -102,23 +92,6 @@ namespace Codyssi.PuzzleHelper
             }
 
             return update;
-        }
-
-        /// <summary>
-        /// Based on today's date, calculate the latest Codyssi day available
-        /// </summary>
-        /// <returns></returns>
-        private static int GetLatestDay()
-        {
-            DateTime now = DateTime.UtcNow.AddHours(Globals.SERVER_UTC_OFFSET).AddDays(-1);
-            int latestPuzzleDay;
-
-            // Get the dates that puzzles release on
-            List<DateTime> dates = Enumerable.Range(Globals.EVENT_DAY, Globals.NUMBER_OF_PUZZLES).Select(d => new DateTime(Globals.EVENT_YEAR, Globals.EVENT_MONTH, d)).ToList();
-
-            latestPuzzleDay = dates.Count(d => d < now);
-
-            return latestPuzzleDay;
         }
     }
 }

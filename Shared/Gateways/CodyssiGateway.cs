@@ -35,6 +35,23 @@ namespace Codyssi.Gateways
             HttpResponseMessage result = await client!.SendAsync(message);
             string response = await GetSuccessfulResponseContent(result);
 
+            try
+            {
+                // Display the response
+                HtmlDocument doc = new();
+                doc.LoadHtml(response);
+                HtmlNode code = doc.DocumentNode.SelectSingleNode("//body");
+                response = code.InnerHtml;
+                response = response.Replace("<br>", string.Empty);
+                response = string.Join("\n", response.Split("\n").Where(r => !string.IsNullOrEmpty(r)).Select(r => r.Trim()));
+                response = response.Replace("\n\n", "\n");
+                response = response.Trim('\n');
+            }
+            catch (Exception)
+            {
+                System.Console.WriteLine("Error parsing html response.");
+            }
+
             return response;
         }
 
@@ -69,8 +86,10 @@ namespace Codyssi.Gateways
                 doc.LoadHtml(response);
                 HtmlNode code = doc.DocumentNode.SelectSingleNode("//code");
                 response = code.InnerHtml;
-                response = response.Replace("\n<br>", string.Empty);
-                response = response.Replace(" \n", "\n");
+                response = response.Replace("<br>", string.Empty);
+                response = string.Join("\n", response.Split("\n").Where(r => !string.IsNullOrEmpty(r)).Select(r => r.Trim()));
+                response = response.Replace("\n\n", "\n");
+                response = response.Trim('\n');
             }
             catch (Exception)
             {
