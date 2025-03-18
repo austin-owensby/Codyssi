@@ -4,6 +4,7 @@ using Codyssi.Console.Controllers;
 // Set any of these values to default them and bypass the console interface
 int? mode = null;
 int? day = null;
+int? part = null;
 bool? send = null;
 bool? example = null;
 
@@ -48,6 +49,24 @@ if (mode == 1 || mode == 2) {
 }
 
 if (mode == 1) {
+    while (part == null) {
+        Console.Clear();
+        System.Console.WriteLine($"Enter a part (1-3):");
+
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input)) {
+            continue;
+        }
+
+        if(int.TryParse(input, out int partValue)) {
+            if (partValue < 1 || partValue > Globals.NUMBER_OF_PUZZLES) {
+                continue;
+            }
+            part = partValue;
+        }
+    }
+
     while (example == null) {
         Console.Clear();
         System.Console.WriteLine("Run example? (Y/N):");
@@ -90,7 +109,7 @@ Console.Clear();
 Controller controller = new();
 
 if (mode == 1) {
-    await controller.GetSolution(day!.Value, send!.Value, example!.Value);
+    await controller.GetSolution(day!.Value, part!.Value, send!.Value, example!.Value);
 }
 else if (mode == 2) {
     await controller.ImportInputFile(day!.Value);

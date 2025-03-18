@@ -56,9 +56,10 @@ The Puzzle Helper attempts to prevent spamming the server by:
 ### GET `api/run-solution`
 - Query parameters
    - day (Ex. 14) (Defaults to 1)
+   - part (Ex. 3) (Defaults to 1)
    - send (Ex. true) (Defaults to false) Submit the result to Codyssi
    - example (Ex. true) (Defaults to false) Use an example file instead of the regular input, you must add the example at `Inputs/<DD>_example.txt`
-- Ex. `GET api/run-solution?day=14&&send=true`
+- Ex. `GET api/run-solution?day=14&part=1&send=true`
 
 Runs a specific day's solution, and optionally posts the answer to Codyssi and returns the result.
 

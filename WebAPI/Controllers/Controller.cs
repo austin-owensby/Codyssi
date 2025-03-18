@@ -21,11 +21,12 @@ namespace Codyssi.WebAPI.Controllers
         /// Runs a specific day's solution, and optionally posts the answer to Codyssi and returns the result.
         /// </summary>
         /// <param name="day"></param>
+        /// <param name="part"></param>
         /// <param name="send">Submit the result to Codyssi</param>
         /// <param name="example">Use an example file instead of the regular input, you must add the example at `Inputs/DD_example.txt`</param>
         /// <response code="200">The result of running the solution. If submitting the solution, also returns the response from Codyssi.</response>
         [HttpGet("run-solution")]
-        public async Task<ActionResult<string>> GetSolution([FromQuery, BindRequired] int day = 1, bool send = false, bool example = false)
+        public async Task<ActionResult<string>> GetSolution([FromQuery, BindRequired] int day = 1, int part = 1, bool send = false, bool example = false)
         {
             if (send && example)
             {
@@ -34,7 +35,7 @@ namespace Codyssi.WebAPI.Controllers
 
             try
             {
-                return await solutionService.GetSolution(day, send, example);
+                return await solutionService.GetSolution(day, part, send, example);
             }
             catch (SolutionNotFoundException e)
             {

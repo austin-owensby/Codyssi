@@ -12,9 +12,10 @@ namespace Codyssi.Console.Controllers
         /// Runs a specific day's solution, and optionally posts the answer to Codyssi and returns the result.
         /// </summary>
         /// <param name="day"></param>
+        /// <param name="part"></param>
         /// <param name="send">Submit the result to Codyssi</param>
         /// <param name="example">Use an example file instead of the regular input, you must add the example at `Inputs/DD_example.txt`</param>
-        public async Task GetSolution(int day = 1, bool send = false, bool example = false) {
+        public async Task GetSolution(int day = 1, int part = 1, bool send = false, bool example = false) {
             if (send && example)
             {
                 System.Console.WriteLine("You're attempting to submit your answer to Codyssi while using an example input, this is likely a mistake.");
@@ -22,7 +23,7 @@ namespace Codyssi.Console.Controllers
             
             SolutionService solutionService = SetupSolutionService();
 
-            string result = await solutionService.GetSolution(day, send, example);
+            string result = await solutionService.GetSolution(day, part, send, example);
             System.Console.WriteLine(result);
         }
 

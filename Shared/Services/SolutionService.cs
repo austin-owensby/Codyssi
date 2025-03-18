@@ -13,18 +13,24 @@ namespace Codyssi.Services
         /// Execute the specific solution based on the passed in parameters
         /// </summary>
         /// <param name="day"></param>
+        /// <param name="part"></param>
         /// <param name="send"></param>
         /// <param name="example"></param>
         /// <returns></returns>
         /// <exception cref="SolutionNotFoundException"></exception>
-        public async Task<string> GetSolution(int day, bool send, bool example)
+        public async Task<string> GetSolution(int day, int part, bool send, bool example)
         {
-            System.Console.WriteLine($"Running solution for day: {day}, example: {(example ? "yes" : "no")}, submit: {(send ? "yes" : "no")}");
+            System.Console.WriteLine($"Running solution for day: {day}, part: {part}, example: {(example ? "yes" : "no")}, submit: {(send ? "yes" : "no")}");
             ISolutionDayService service = FindSolutionService(day);
 
             Stopwatch sw = Stopwatch.StartNew();
             // Run the specific solution
-            string answer = service.RunSolution(example);
+            string answer = (part) switch {
+                1 => service.RunPart1Solution(example),
+                2 => service.RunPart2Solution(example),
+                3 => service.RunPart3Solution(example),
+                _ => throw new Exception($"Unknown part: {part}")
+            };
             sw.Stop();
             System.Console.WriteLine($"Elapsed time: {sw.Elapsed}");
 
@@ -33,7 +39,7 @@ namespace Codyssi.Services
             {
                 try
                 {
-                    string response = await codyssiGateway.SubmitAnswer(day, answer);
+                    string response = await codyssiGateway.SubmitAnswer(day, part, answer);
                     answer = $"Submitted answer: {answer}.\nCodyssi response: {response}";
                 }
                 catch (Exception e)

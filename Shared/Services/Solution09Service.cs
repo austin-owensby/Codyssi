@@ -4,7 +4,35 @@ namespace Codyssi.Services
     // file://./../../Inputs/09.txt
     public class Solution09Service : ISolutionDayService
     {
-        public string RunSolution(bool example)
+        public string RunPart1Solution(bool example)
+        {
+            List<string> lines = FileUtility.GetInputLines(9, example);
+
+            int answer = 0;
+
+            foreach (string line in lines)
+            {
+                
+            }
+
+            return answer.ToString();
+        }
+
+        public string RunPart2Solution(bool example)
+        {
+            List<string> lines = FileUtility.GetInputLines(9, example);
+
+            int answer = 0;
+
+            foreach (string line in lines)
+            {
+                
+            }
+
+            return answer.ToString();
+        }
+
+        public string RunPart3Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(9, example);
 
