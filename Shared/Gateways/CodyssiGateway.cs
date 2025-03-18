@@ -137,8 +137,8 @@ namespace Codyssi.Gateways
                 // Display the response
                 HtmlDocument doc = new();
                 doc.LoadHtml(response);
-                HtmlNode div = doc.DocumentNode.SelectSingleNode("//div");
-                response = div.InnerHtml;
+                HtmlNode h3 = doc.DocumentNode.SelectSingleNode("//h3");
+                response = h3.InnerHtml.Trim();
             }
             catch (Exception)
             {
