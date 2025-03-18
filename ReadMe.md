@@ -10,6 +10,11 @@ You may also reference the `aowensby-solutions` branch which contains my own sol
 ## Work in Progress
 This is still a work in progress and needs more organization to work with this event's specific format
 
+TODO:
+- Check to see if an input is actually available based on the date before attempting to import it
+- Brainstorm if there is a clearer way to divide challenge sets
+- Set up Puzzle Helper Solution Service generation
+
 ## Quick Start
 1. Run the Program (See [Setup](#setup) below)
 1. (Optional) Create a Cookie.txt file to enable puzzle input/submission (See [Puzzle Helper](#puzzle-helper) below)
