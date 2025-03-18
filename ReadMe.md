@@ -71,3 +71,7 @@ Runs a specific day's solution, and optionally posts the answer to Codyssi and r
 Imports the input and example from Codyssi for a specific day.
 
 The program is idempotent (You can run this multiple times as it will only add a file if it is needed.)
+
+## Extra Notes
+The creator of Codyssi is fine with the inputs being public
+> Inputs don’t need to be kept private for Codyssi.
