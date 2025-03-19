@@ -40,16 +40,29 @@ namespace Codyssi.Services
             }
 
             long remainder = sum;
-            int digit = 0;
             int fromBase = 65;
+
+            List<(int, char)> digits = [];
             string answer = string.Empty;
 
-            while (remainder != 0) {
-                //int digitValue = Math.Floor(remainder / Math.Pow(fromBase, digit));
-                char digitChar = 'a';
-                answer = $"{digitChar}answer";
+            List<char> digitMapping = Enumerable.Range('0', '9' - '0' + 1).Concat(Enumerable.Range('A', 'Z' - 'A' + 1)).Concat(Enumerable.Range('a', 'z' - 'a' + 1)).Concat(['!', '@', '#']).Select(c => (char)c).ToList();
 
-                digit++;
+            while (remainder != 0) {
+                int magnitude = (int)Math.Floor(Math.Log(remainder)/Math.Log(fromBase));
+                int digitValue = (int)Math.Floor(remainder / Math.Pow(fromBase, magnitude));
+
+                remainder -= (long)Math.Pow(fromBase, magnitude);
+                char digitChar = digitMapping[digitValue];
+                digits.Add((magnitude, digitChar));
+            }
+
+            for (int digit = digits.Max(d => d.Item1); digit >= 0; digit--) {
+                if (digits.Any(d => d.Item1 == digit)) {
+                    answer += digits.First(d => d.Item1 == digit).Item2;
+                }
+                else {
+                    answer += '0';
+                }
             }
 
             return answer;
