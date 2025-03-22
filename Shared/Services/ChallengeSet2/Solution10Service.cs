@@ -8,12 +8,7 @@ namespace Codyssi.Services
         {
             List<string> lines = FileUtility.GetInputLines(10, example);
 
-            int answer = 0;
-
-            foreach (string line in lines)
-            {
-                
-            }
+            int answer = lines[0].Count(char.IsLetter);
 
             return answer.ToString();
         }
@@ -22,12 +17,7 @@ namespace Codyssi.Services
         {
             List<string> lines = FileUtility.GetInputLines(10, example);
 
-            int answer = 0;
-
-            foreach (string line in lines)
-            {
-                
-            }
+            int answer = lines[0].Sum(c => char.IsLetter(c) ? c.GetCharValue() : 0);
 
             return answer.ToString();
         }
@@ -35,13 +25,16 @@ namespace Codyssi.Services
         public string RunPart3Solution(bool example)
         {
             List<string> lines = FileUtility.GetInputLines(10, example);
+            List<char> chars = lines[0].ToList();
 
-            int answer = 0;
-
-            foreach (string line in lines)
-            {
-
+            foreach (int i in chars.Count) {
+                if (!char.IsLetter(chars[i])) {
+                    int value = Utility.Mod(chars[i - 1].GetCharValue() * 2 - 5 - 1, 52) + 1;
+                    chars[i] = (char)(value <= 26 ? value + 'a' - 1 : value - 26 + 'A' - 1); 
+                }
             }
+
+            int answer = chars.Sum(c => c.GetCharValue());
 
             return answer.ToString();
         }
