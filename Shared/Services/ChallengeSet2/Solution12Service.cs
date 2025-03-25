@@ -8,12 +8,7 @@ namespace Codyssi.Services
         {
             List<string> lines = FileUtility.GetInputLines(12, example);
 
-            int answer = 0;
-
-            foreach (string line in lines)
-            {
-                
-            }
+            int answer = lines.SelectMany().Count(char.IsLetter);
 
             return answer.ToString();
         }
@@ -26,7 +21,30 @@ namespace Codyssi.Services
 
             foreach (string line in lines)
             {
+                string prevLine = line;
+
+                bool keepLooping = true;
+                while (keepLooping) {
+                    keepLooping = false;
+                    string newLine = string.Empty;
+
+                    for (int i = 0; i < prevLine.Length; i++) {
+                        if (keepLooping) {
+                            newLine += prevLine[i];
+                        }
+                        else if (i != prevLine.Length - 1 && char.IsNumber(prevLine[i]) != char.IsNumber(prevLine[i + 1])) {
+                            keepLooping = true;
+                            i++;
+                        }
+                        else {
+                            newLine += prevLine[i];
+                        }
+                    }
+
+                    prevLine = newLine;
+                }
                 
+                answer += prevLine.Length;
             }
 
             return answer.ToString();
@@ -40,7 +58,30 @@ namespace Codyssi.Services
 
             foreach (string line in lines)
             {
+                string prevLine = line;
 
+                bool keepLooping = true;
+                while (keepLooping) {
+                    keepLooping = false;
+                    string newLine = string.Empty;
+
+                    for (int i = 0; i < prevLine.Length; i++) {
+                        if (keepLooping) {
+                            newLine += prevLine[i];
+                        }
+                        else if (i != prevLine.Length - 1 && (char.IsNumber(prevLine[i]) && char.IsLetter(prevLine[i + 1]) || char.IsLetter(prevLine[i]) && char.IsNumber(prevLine[i + 1]))) {
+                            keepLooping = true;
+                            i++;
+                        }
+                        else {
+                            newLine += prevLine[i];
+                        }
+                    }
+
+                    prevLine = newLine;
+                }
+                
+                answer += prevLine.Length;
             }
 
             return answer.ToString();
